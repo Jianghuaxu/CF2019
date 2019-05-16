@@ -3,6 +3,7 @@ package com.example.cf2019;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.Camera;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
+import com.journeyapps.barcodescanner.camera.CameraParametersCallback;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,6 +58,7 @@ public class CameraFragment extends Fragment{
             @Override
             public void barcodeResult(BarcodeResult result) {
                 Toast.makeText(getActivity(), result.getText(), Toast.LENGTH_LONG).show();
+
                 dbcScanner.setVisibility(View.GONE);
                 productPreview.setVisibility(View.VISIBLE);
                 productDetail3.setVisibility(View.VISIBLE);
