@@ -6,10 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -28,7 +25,8 @@ public class CameraFragment extends Fragment implements View.OnClickListener{
     DecoratedBarcodeView dbcScanner;
     ImageView productPreview;
 
-    LinearLayout productDetail3;
+    ImageView ForkLiftStausGRImageView;
+    TextView ForkLiftStausGRTextView;
 
     Button testBtn;
 
@@ -41,7 +39,10 @@ public class CameraFragment extends Fragment implements View.OnClickListener{
         //scanBtn.setOnClickListener(this);
         dbcScanner = view.findViewById(R.id.dbv_barcode);
         productPreview = view.findViewById(R.id.product_preview);
-        productDetail3 = view.findViewById(R.id.forklift_detail3);
+
+        ForkLiftStausGRImageView = view.findViewById(R.id.ForkliftStatusGR1);
+        ForkLiftStausGRTextView = view.findViewById(R.id.ForkliftStatusGR2);
+
 
         testBtn = view.findViewById(R.id.test_camera);
         testBtn.setOnClickListener(this);
@@ -52,11 +53,14 @@ public class CameraFragment extends Fragment implements View.OnClickListener{
             @Override
             public void barcodeResult(BarcodeResult result) {
                 Toast.makeText(getActivity(), result.getText(), Toast.LENGTH_LONG).show();
-
+                ForkLiftStausGRImageView.setVisibility(View.VISIBLE);
                 dbcScanner.setVisibility(View.GONE);
                 productPreview.setVisibility(View.VISIBLE);
-                productDetail3.setVisibility(View.VISIBLE);
                 callBack.getHUNumber(result.getText());
+                if(dbcScanner.isActivated()) {
+                    dbcScanner.pause();
+                }
+                showForkLiftStatus();
 
             }
 
@@ -67,6 +71,15 @@ public class CameraFragment extends Fragment implements View.OnClickListener{
         });
 
         return view;
+    }
+
+    public void showForkLiftStatus() {
+        try {
+            Thread.currentThread().sleep(1000);
+            ForkLiftStausGRTextView.setVisibility(View.VISIBLE);
+        } catch(InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 

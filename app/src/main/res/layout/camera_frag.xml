@@ -6,8 +6,6 @@
               android:layout_height="match_parent">
 
     <LinearLayout
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -15,8 +13,8 @@
 
         <com.journeyapps.barcodescanner.DecoratedBarcodeView
                 android:id="@+id/dbv_barcode"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
         />
         <ImageView
                 android:visibility="gone"
@@ -27,6 +25,7 @@
     </LinearLayout>
 
     <Button
+            android:visibility="gone"
             android:layout_margin="20dp"
             android:id="@+id/test_camera"
             android:layout_width="wrap_content"
@@ -47,7 +46,7 @@
                 android:id="@+id/forklift_detail1"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
+                android:layout_height="32dp">
             <ImageView
                     android:padding="10dp"
                     android:src="@drawable/green_point"
@@ -60,14 +59,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Forklift arrives in A"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" android:gravity="center"/>
         </LinearLayout>
 
         <LinearLayout
                 android:id="@+id/forklift_detail2"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
+                android:layout_height="32dp">
             <ImageView
                     android:padding="10dp"
                     android:src="@drawable/green_point"
@@ -80,28 +79,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Forklift arrives in B"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" android:gravity="center"/>
         </LinearLayout>
 
         <LinearLayout
-                android:visibility="invisible"
-                android:id="@+id/forklift_detail3"
+                android:animateLayoutChanges="true"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
+                android:layout_height="32dp">
             <ImageView
+                    android:visibility="invisible"
+                    android:id="@+id/ForkliftStatusGR1"
                     android:padding="10dp"
                     android:src="@drawable/green_point"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"/>
 
             <TextView
+                    android:visibility="invisible"
+                    android:id="@+id/ForkliftStatusGR2"
                     android:textStyle="bold"
                     android:layout_gravity="bottom"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Product finished GR"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" android:gravity="center"/>
         </LinearLayout>
 
     </LinearLayout>
