@@ -1,16 +1,15 @@
 package com.example.cf2019;
 
+import android.gesture.GestureOverlayView;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class PackingFragment extends Fragment implements CameraFragment.CallBack{
+public class PackingFragment extends Fragment implements CameraFragment.CallBack, View.OnDragListener {
 
     ImageView productView;
 
@@ -22,6 +21,7 @@ public class PackingFragment extends Fragment implements CameraFragment.CallBack
         cameraFragment.setCallBack(this);
 
         productView = view.findViewById(R.id.product);
+        productView.setOnDragListener(this);
 
         return view;
     }
@@ -29,5 +29,10 @@ public class PackingFragment extends Fragment implements CameraFragment.CallBack
     @Override
     public void getHUNumber(String number) {
         productView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public boolean onDrag(View view, DragEvent dragEvent) {
+        return false;
     }
 }

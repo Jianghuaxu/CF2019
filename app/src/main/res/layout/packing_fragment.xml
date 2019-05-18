@@ -18,8 +18,8 @@
                 android:layout_height="wrap_content"
                 android:text="HU on forklift"/>
         <ImageView
-                android:id="@+id/product"
                 android:visibility="invisible"
+                android:id="@+id/product"
                 android:src="@drawable/canon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

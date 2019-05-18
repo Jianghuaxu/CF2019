@@ -3,15 +3,9 @@ package com.example.cf2019;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.hardware.Camera;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.util.Log;
+import android.view.*;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,24 +17,20 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.zxing.ResultPoint;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
-import com.journeyapps.barcodescanner.camera.CameraParametersCallback;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-public class CameraFragment extends Fragment{
+public class CameraFragment extends Fragment implements View.OnClickListener{
 
-    int TAKE_PHOTO = 1;
     DecoratedBarcodeView dbcScanner;
     ImageView productPreview;
 
     LinearLayout productDetail3;
+
+    Button testBtn;
 
     private CallBack callBack;
     @Nullable
@@ -49,9 +39,13 @@ public class CameraFragment extends Fragment{
         View view = inflater.inflate(R.layout.camera_frag, container, false);
         //Button scanBtn = view.findViewById(R.id.scan_trigger);
         //scanBtn.setOnClickListener(this);
-        dbcScanner = (DecoratedBarcodeView) view.findViewById(R.id.dbv_barcode);
+        dbcScanner = view.findViewById(R.id.dbv_barcode);
         productPreview = view.findViewById(R.id.product_preview);
         productDetail3 = view.findViewById(R.id.forklift_detail3);
+
+        testBtn = view.findViewById(R.id.test_camera);
+        testBtn.setOnClickListener(this);
+
         requestPermission();
 
         dbcScanner.decodeSingle(new BarcodeCallback() {
@@ -75,6 +69,27 @@ public class CameraFragment extends Fragment{
         return view;
     }
 
+
+    @Override
+    public void onClick(View view) {
+        int viewId = view.getId();
+        switch (viewId) {
+            case R.id.test_camera:
+                Button btn = (Button) view;
+                if(btn.getText().equals("Resume")) {
+                    dbcScanner.resume();
+                    Toast.makeText(getActivity(), dbcScanner.isActivated()?"Activated":"Disabled", Toast.LENGTH_LONG).show();
+                    btn.setText("Pause");
+
+                } else if(btn.getText().equals("Pause")) {
+                    dbcScanner.pause();
+                    Toast.makeText(getActivity(), dbcScanner.isActivated()?"Activated":"Disabled", Toast.LENGTH_LONG).show();
+                    btn.setText("Resume");
+                }
+                break;
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -85,6 +100,23 @@ public class CameraFragment extends Fragment{
         if(!dbcScanner.isActivated()) {
             dbcScanner.resume();
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("status", "Paused");
+        if(!dbcScanner.isActivated()) {
+            dbcScanner.pause();
+        }
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("status", "Destroyed");
+        dbcScanner.pause();
     }
 
     void requestPermission() {
